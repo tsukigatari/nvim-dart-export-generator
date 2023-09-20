@@ -33,24 +33,24 @@ function M.get_dart_files_in_directory(user_directory)
 end
 
 local state = {
-  success = 0,
-  error = 1,
+	success = 0,
+	error = 1,
 }
 
 function M.create_export_file(generation_path, data)
 	local _generation_path = generation_path .. "/" .. "index.dart"
 	local file = io.open(_generation_path, "w")
 
-  local _data = table.concat(data, "\n")
+	local _data = table.concat(data, "\n")
 
 	if file then
 		file:write(_data)
 
 		file:close()
 
-    return state.success
+		return state.success
 	else
-    return state.error
+		return state.error
 	end
 end
 

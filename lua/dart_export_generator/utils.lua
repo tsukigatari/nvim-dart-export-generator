@@ -34,7 +34,7 @@ function M.create_export_array(project_name, files, user_path)
 	local array = {}
 
 	for _, file in pairs(files) do
-		table.insert(array, "export" .. " " .. "'" .. "package:" .. project_name .. user_path .. "/" .. file .. "'" .. ";")
+		table.insert(array, "export" .. " " .. "'" .. "package:" .. project_name .. "/" .. user_path .. "/" .. file .. "'" .. ";")
 	end
 
   return array
