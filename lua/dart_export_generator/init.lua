@@ -1,5 +1,6 @@
 local directory = require("dart_export_generator.directory")
 local utils = require("dart_export_generator.utils")
+local resp = require("dart_export_generator.resp")
 
 local M = {}
 local full_path = nil
@@ -11,9 +12,19 @@ function M.setup()
 	local _current_directory = current_directory .. "/lib/"
 
 	local user_path = directory.get_path_from_user(_current_directory)
+	if user_path == nil or user_path == "" or user_path == " " or user_path == "/" then
+		print(resp.invalid_user_path)
+		return
+	end
+
 	utils.clear_cmd()
 
 	full_path = _current_directory .. "/" .. user_path
+	local exists = directory.directory_exists(full_path)
+	if not exists then
+		print(resp.directory_not_exists)
+		return
+	end
 
 	local dart_files = directory.get_dart_files_in_directory(full_path)
 
@@ -21,9 +32,9 @@ function M.setup()
 
 	local state_created = directory.create_export_file(full_path, dart_files_array)
 	if state_created == 0 then
-		print("Successfully created")
+		print(resp.success_created)
 	else
-		print("Error")
+		print(resp.error)
 	end
 end
 

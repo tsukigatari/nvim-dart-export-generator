@@ -1,9 +1,7 @@
 local M = {}
 
-local PUBSPEC = "pubspec.yaml"
-
 function M.get_project_name_from_pubspec(current_directory)
-	local spec_path = current_directory .. "/" .. PUBSPEC
+	local spec_path = current_directory .. "/" .. "pubspec.yaml"
 	local file = io.open(spec_path, "r")
 
 	local value = nil
@@ -34,10 +32,12 @@ function M.create_export_array(project_name, files, user_path)
 	local array = {}
 
 	for _, file in pairs(files) do
-		table.insert(array, "export" .. " " .. "'" .. "package:" .. project_name .. "/" .. user_path .. "/" .. file .. "'" .. ";")
+		local r = "export" .. " " .. "'" .. "package:" .. project_name .. "/" .. user_path .. "/" .. file .. "'" .. ";"
+		r = r:gsub("//", "/")
+		table.insert(array, r)
 	end
 
-  return array
+	return array
 end
 
 return M

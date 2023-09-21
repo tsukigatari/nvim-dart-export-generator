@@ -12,6 +12,16 @@ function M.get_path_from_user(current_directory)
 	return generation_path
 end
 
+function M.directory_exists(directory)
+	local ok, err, code = os.rename(directory, directory)
+	if not ok then
+		if code == 13 then
+			return true
+		end
+	end
+	return ok, err
+end
+
 function M.get_dart_files_in_directory(user_directory)
 	local files = {}
 
