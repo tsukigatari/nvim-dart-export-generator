@@ -28,6 +28,13 @@ function M.clear_cmd()
 	vim.cmd("redraw")
 end
 
+function M.get_name_from_user()
+	local prompt = string.format("enter index name: ")
+	local index_name = vim.fn.input(prompt)
+
+	return index_name
+end
+
 function M.create_export_array(project_name, files, user_path)
 	local array = {}
 

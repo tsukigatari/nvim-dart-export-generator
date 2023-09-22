@@ -47,8 +47,14 @@ local state = {
 	error = 1,
 }
 
-function M.create_export_file(generation_path, data)
-	local _generation_path = generation_path .. "/" .. "index.dart"
+function M.create_export_file(generation_path, data, index_name)
+	if index_name == nil then
+		index_name = "index.dart"
+	elseif not index_name:match("%.dart$") then
+		index_name = index_name .. ".dart"
+	end
+
+	local _generation_path = generation_path .. "/" .. index_name
 	local file = io.open(_generation_path, "w")
 
 	local _data = table.concat(data, "\n")
