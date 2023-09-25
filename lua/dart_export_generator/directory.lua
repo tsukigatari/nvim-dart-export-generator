@@ -12,6 +12,16 @@ function M.get_path_from_user(current_directory)
 	return generation_path
 end
 
+function M.file_exists(file_path)
+	local f = io.open(file_path, "r")
+	if f ~= nil then
+		io.close(f)
+		return true
+	else
+		return false
+	end
+end
+
 function M.directory_exists(directory)
 	local ok, err, code = os.rename(directory, directory)
 	if not ok then
@@ -42,7 +52,7 @@ function M.get_dart_files_in_directory(user_directory)
 	return files
 end
 
-local state = {
+local state_created = {
 	success = 0,
 	error = 1,
 }
@@ -64,9 +74,9 @@ function M.create_export_file(generation_path, data, index_name)
 
 		file:close()
 
-		return state.success
+		return state_created.success
 	else
-		return state.error
+		return state_created.error
 	end
 end
 

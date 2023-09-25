@@ -21,6 +21,7 @@ function M.setup(pattern)
 	utils.clear_cmd()
 
 	full_path = _current_directory .. "/" .. user_path
+	full_path = utils.path_cleaner(full_path)
 	local exists = directory.directory_exists(full_path)
 	if not exists then
 		print(resp.directory_not_exists)
@@ -29,6 +30,28 @@ function M.setup(pattern)
 
 	if pattern == "custom" then
 		index_name = utils.get_name_from_user()
+		if index_name == nil or index_name == "" or index_name == " " then
+			print(resp.invalid_index_name)
+			return
+		end
+
+		if not index_name:match("%.dart$") then
+			index_name = index_name .. ".dart"
+		end
+
+		utils.clear_cmd()
+
+		local c_exists = directory.file_exists(utils.path_cleaner(full_path .. "/" .. index_name))
+		if c_exists then
+			print(resp.file_already_exists)
+			return
+		end
+	else
+		local d_exists = directory.file_exists(utils.path_cleaner(full_path .. "/" .. "index.dart"))
+		if d_exists then
+			print(resp.file_already_exists)
+			return
+		end
 	end
 
 	utils.clear_cmd()

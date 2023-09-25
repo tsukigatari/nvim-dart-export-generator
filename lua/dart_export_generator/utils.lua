@@ -40,11 +40,16 @@ function M.create_export_array(project_name, files, user_path)
 
 	for _, file in pairs(files) do
 		local r = "export" .. " " .. "'" .. "package:" .. project_name .. "/" .. user_path .. "/" .. file .. "'" .. ";"
-		r = r:gsub("//", "/")
+		r = M.path_cleaner(r)
 		table.insert(array, r)
 	end
 
 	return array
+end
+
+function M.path_cleaner(path)
+	path = path:gsub("//", "/")
+	return path
 end
 
 return M
