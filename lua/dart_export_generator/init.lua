@@ -14,7 +14,7 @@ function M.setup(pattern)
 
 	local user_path = directory.get_path_from_user(_current_directory)
 	if user_path == nil or user_path == "" or user_path == " " or user_path == "/" then
-		print(resp.invalid_user_path)
+		print(resp.error.invalid_user_path)
 		return
 	end
 
@@ -24,14 +24,14 @@ function M.setup(pattern)
 	full_path = utils.path_cleaner(full_path)
 	local exists = directory.directory_exists(full_path)
 	if not exists then
-		print(resp.directory_not_exists)
+		print(resp.error.directory_not_exists)
 		return
 	end
 
 	if pattern == "custom" then
 		index_name = utils.get_name_from_user()
 		if index_name == nil or index_name == "" or index_name == " " then
-			print(resp.invalid_index_name)
+			print(resp.error.invalid_index_name)
 			return
 		end
 
@@ -43,13 +43,13 @@ function M.setup(pattern)
 
 		local c_exists = directory.file_exists(utils.path_cleaner(full_path .. "/" .. index_name))
 		if c_exists then
-			print(resp.file_already_exists)
+			print(resp.error.file_already_exists)
 			return
 		end
 	else
 		local d_exists = directory.file_exists(utils.path_cleaner(full_path .. "/" .. "index.dart"))
 		if d_exists then
-			print(resp.file_already_exists)
+			print(resp.error.file_already_exists)
 			return
 		end
 	end
@@ -63,9 +63,9 @@ function M.setup(pattern)
 	local state_created = directory.create_export_file(full_path, dart_files_array, index_name)
 	if state_created == 0 then
 		index_name = nil
-		print(resp.success_created)
+		print(resp.ok.success_created)
 	else
-		print(resp.error)
+		print(resp.error.error)
 	end
 end
 
