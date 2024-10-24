@@ -7,7 +7,7 @@ This is a Neovim plugin that automatically generates dart export files.
 [Lazy.nvim](https://github.com/folke/lazy.nvim)
 
 ```lua
-{ "ndfz/nvim-dart-export-generator" }
+{ "tsukigatari/nvim-dart-export-generator" }
 ```
 
 ## Usage
